@@ -1,0 +1,4 @@
+name: Fetch images
+on: {push: {branches: ["fetch-images-2"], paths: ["fetch/urls.txt"]}}
+permissions: {contents: write}
+jobs: {fetch: {runs-on: ubuntu-latest, steps: [{uses: actions/checkout@v4}, {run: "mkdir -p fetch/out; while read -r name url; do [ -n \"$name\" ] && curl -sSfL -o \"fetch/out/$name.png\" \"$url\"; done < fetch/urls.txt; git config user.name \"Disa McAlister\"; git config user.email \"disarae@gmail.com\"; git add fetch/out; git commit -m \"Fetched images\"; git push origin HEAD:fetch-images-2"}]}}
